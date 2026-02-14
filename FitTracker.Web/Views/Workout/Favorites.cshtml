@@ -1,0 +1,53 @@
+﻿@model IEnumerable<WorkoutFavoritesViewModel>
+
+@{
+    ViewData["Title"] = "My Favorites";
+}
+
+<div class="container my-5">
+    <h2 class="mb-4"><i class="bi bi-heart-fill text-danger"></i> My Favorite Workouts</h2>
+
+    @if (Model.Any())
+    {
+        <div class="row">
+            @foreach (var workout in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        @if (!string.IsNullOrEmpty(workout.ImageUrl))
+                        {
+                            <img src="@workout.ImageUrl" class="card-img-top" alt="@workout.Title" style="height: 200px; object-fit: cover;" />
+                        }
+                        else
+                        {
+                            <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
+                                <i class="bi bi-image text-white" style="font-size: 3rem;"></i>
+                            </div>
+                        }
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">@workout.Title</h5>
+                            <p><span class="badge bg-primary">@workout.ExerciseType</span></p>
+                            <div class="mt-auto d-flex gap-2">
+                                <a asp-action="Details" asp-route-id="@workout.Id" class="btn btn-primary btn-sm">
+                                    <i class="bi bi-eye"></i> Details
+                                </a>
+                                <form asp-action="Remove" asp-route-id="@workout.Id" method="post">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">
+                                        <i class="bi bi-heart-break"></i> Remove
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info text-center">
+            <i class="bi bi-info-circle"></i> You haven't saved any workouts yet. Browse
+            <a asp-action="Index">all workouts</a> and save your favorites!
+        </div>
+    }
+</div>

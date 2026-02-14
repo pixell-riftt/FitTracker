@@ -1,31 +1,25 @@
-using System.Diagnostics;
+using FitTracker.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using FitTracker.Web.Models;
+using System.Diagnostics;
 
-namespace FitTracker.Web.Controllers;
-
-public class HomeController : Controller
+namespace FitTracker.Web.Controllers
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    public class HomeController : Controller
     {
-        _logger = logger;
-    }
+        public IActionResult Index()
+        {
+            if (User.Identity?.IsAuthenticated ?? false)
+            {
+                return RedirectToAction("Index", "Workout");
+            }
 
-    public IActionResult Index()
-    {
-        return View();
-    }
+            return View();
+        }
 
-    public IActionResult Privacy()
-    {
-        return View();
-    }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
     }
 }

@@ -1,0 +1,59 @@
+﻿@model WorkoutDetailsViewModel
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <img src="@Model.ImageUrl" class="card-img-top" alt="@Model.Title" style="max-height: 400px; object-fit: cover;" />
+                }
+                <div class="card-body">
+                    <h2 class="card-title">@Model.Title</h2>
+
+                    <div class="mb-3">
+                        <span class="badge bg-primary"><i class="bi bi-tag"></i> @Model.ExerciseType</span>
+                        <span class="badge bg-info"><i class="bi bi-clock"></i> @Model.DurationMinutes min</span>
+                        <span class="badge bg-secondary"><i class="bi bi-calendar"></i> @Model.CreatedOn.ToString("MMM dd, yyyy")</span>
+                    </div>
+
+                    <p class="text-muted"><i class="bi bi-person"></i> By: @Model.Author</p>
+
+                    <hr />
+
+                    <h5>Notes</h5>
+                    <p class="card-text">@Model.Notes</p>
+
+                    <hr />
+
+                    <div class="d-flex gap-2">
+                        @if (Model.IsAuthor)
+                        {
+                            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">
+                                <i class="bi bi-pencil"></i> Edit
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">
+                                <i class="bi bi-trash"></i> Delete
+                            </a>
+                        }
+                        @if (!Model.IsAuthor && !Model.IsSaved)
+                        {
+                            <form asp-action="Save" asp-route-id="@Model.Id" method="post">
+                                <button type="submit" class="btn btn-outline-danger">
+                                    <i class="bi bi-heart"></i> Save to Favorites
+                                </button>
+                            </form>
+                        }
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left"></i> Back
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
