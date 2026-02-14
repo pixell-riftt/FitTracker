@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\FitTracker.Data\FitTracker.Data.csproj" />
+    <ProjectReference Include="..\FitTracker.Data.Models\FitTracker.Data.Models.csproj" />
+    <ProjectReference Include="..\FitTracker.ViewModels\FitTracker.ViewModels.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>
