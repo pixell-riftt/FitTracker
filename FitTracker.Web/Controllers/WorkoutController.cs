@@ -10,13 +10,39 @@ namespace FitTracker.Web.Controllers
     public class WorkoutController : Controller
     {
         private readonly IWorkoutService _workoutService;
+        private readonly IWebHostEnvironment _environment;
 
-        public WorkoutController(IWorkoutService workoutService)
+        public WorkoutController(IWorkoutService workoutService, IWebHostEnvironment environment)
         {
             _workoutService = workoutService;
+            _environment = environment;
         }
 
         private string GetUserId() => User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        private async Task<string?> SaveImageAsync(IFormFile? imageFile)
+        {
+            if (imageFile == null || imageFile.Length == 0)
+            {
+                return null;
+            }
+
+            string imagesFolder = Path.Combine(_environment.WebRootPath, "images");
+            if (!Directory.Exists(imagesFolder))
+            {
+                Directory.CreateDirectory(imagesFolder);
+            }
+
+            string uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+            string filePath = Path.Combine(imagesFolder, uniqueFileName);
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await imageFile.CopyToAsync(stream);
+            }
+
+            return "/images/" + uniqueFileName;
+        }
 
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -46,12 +72,18 @@ namespace FitTracker.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(WorkoutCreateViewModel model)
+        public async Task<IActionResult> Create(WorkoutCreateViewModel model, IFormFile? ImageFile)
         {
             if (!ModelState.IsValid)
             {
                 model.ExerciseTypes = await _workoutService.GetAllExerciseTypesAsync();
                 return View(model);
+            }
+
+            string? uploadedPath = await SaveImageAsync(ImageFile);
+            if (uploadedPath != null)
+            {
+                model.ImageUrl = uploadedPath;
             }
 
             await _workoutService.AddWorkoutAsync(model, GetUserId());
@@ -74,7 +106,7 @@ namespace FitTracker.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(WorkoutEditViewModel model)
+        public async Task<IActionResult> Edit(WorkoutEditViewModel model, IFormFile? ImageFile)
         {
             if (!ModelState.IsValid)
             {
@@ -84,6 +116,12 @@ namespace FitTracker.Web.Controllers
 
             try
             {
+                string? uploadedPath = await SaveImageAsync(ImageFile);
+                if (uploadedPath != null)
+                {
+                    model.ImageUrl = uploadedPath;
+                }
+
                 await _workoutService.EditWorkoutAsync(model, GetUserId());
             }
             catch

@@ -21,6 +21,7 @@ namespace FitTracker.Services.Core
                 .Where(w => !w.IsDeleted)
                 .Include(w => w.ExerciseType)
                 .Include(w => w.UsersWorkouts)
+                .OrderByDescending(w => w.CreatedOn)
                 .Select(w => new WorkoutIndexViewModel
                 {
                     Id = w.Id,

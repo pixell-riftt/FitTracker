@@ -10,7 +10,7 @@
             <div class="card p-4">
                 <h2 class="mb-4"><i class="bi bi-plus-circle"></i> Add New Workout</h2>
 
-                <form asp-action="Create" method="post">
+                <form asp-action="Create" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label asp-for="Title" class="form-label">Title</label>
                         <input asp-for="Title" class="form-control" placeholder="Enter workout title" />
@@ -46,8 +46,23 @@
                     </div>
 
                     <div class="mb-3">
-                        <label asp-for="ImageUrl" class="form-label">Image URL (optional)</label>
-                        <input asp-for="ImageUrl" class="form-control" placeholder="https://example.com/image.jpg" />
+                        <label class="form-label">Image</label>
+                        <ul class="nav nav-tabs mb-2" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#uploadTab">Upload File</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#urlTab">Image URL</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="uploadTab">
+                                <input type="file" name="ImageFile" class="form-control" accept="image/*" />
+                            </div>
+                            <div class="tab-pane fade" id="urlTab">
+                                <input asp-for="ImageUrl" class="form-control" placeholder="https://example.com/image.jpg" />
+                            </div>
+                        </div>
                     </div>
 
                     <div class="d-flex gap-2">

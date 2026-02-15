@@ -36,9 +36,13 @@
                 {
                     <form asp-controller="Workout" asp-action="Save" asp-route-id="@Model.Id" method="post" class="d-inline">
                         <button type="submit" class="btn btn-outline-danger btn-sm">
-                            <i class="bi bi-heart"></i> Save
+                            <i class="bi bi-heart"></i> Save to Favorites
                         </button>
                     </form>
+                }
+                @if (Model.IsSaved)
+                {
+                    <span class="badge bg-success"><i class="bi bi-heart-fill"></i> Saved!</span>
                 }
             </div>
         </div>
