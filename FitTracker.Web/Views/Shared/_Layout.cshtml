@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,40 +7,195 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
     <style>
+        :root[data-theme="light"] {
+            --bg-primary: #f5f0e8;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #3b2f2f;
+            --text-secondary: #6b5b4f;
+            --accent-green: #5a7247;
+            --accent-green-hover: #4a5f3a;
+            --accent-brown: #8b6f47;
+            --accent-brown-hover: #7a5e3a;
+            --accent-yellow: #c9a84c;
+            --accent-yellow-hover: #b8973f;
+            --navbar-bg: linear-gradient(135deg, #3b2f2f 0%, #5a4a3a 100%);
+            --footer-bg: #3b2f2f;
+            --hero-bg: linear-gradient(135deg, #3b2f2f 0%, #5a7247 50%, #8b6f47 100%);
+            --card-shadow: 0 2px 12px rgba(59, 47, 47, 0.1);
+            --badge-primary: #5a7247;
+            --badge-info: #8b6f47;
+            --badge-warning: #c9a84c;
+            --border-color: #e0d5c5;
+            --input-bg: #ffffff;
+            --alert-bg: #f0ead6;
+        }
+
+        :root[data-theme="dark"] {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --bg-card: #2d2d2d;
+            --text-primary: #e8dfd5;
+            --text-secondary: #b0a898;
+            --accent-green: #7a9a5a;
+            --accent-green-hover: #6b8a4d;
+            --accent-brown: #c9a84c;
+            --accent-brown-hover: #b8973f;
+            --accent-yellow: #d4b85c;
+            --accent-yellow-hover: #c3a74f;
+            --navbar-bg: linear-gradient(135deg, #111111 0%, #2a2a2a 100%);
+            --footer-bg: #111111;
+            --hero-bg: linear-gradient(135deg, #1a1a1a 0%, #2d3a25 50%, #3d3020 100%);
+            --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+            --badge-primary: #7a9a5a;
+            --badge-info: #c9a84c;
+            --badge-warning: #d4b85c;
+            --border-color: #444444;
+            --input-bg: #3a3a3a;
+            --alert-bg: #2d2d2d;
+        }
+
         body {
-            background-color: #f4f6f9;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
         }
+
         .navbar {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: var(--navbar-bg);
         }
+
         .navbar-brand {
             font-weight: bold;
             font-size: 1.5rem;
         }
+
         .card {
-            border: none;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-            transition: transform 0.2s;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        .card:hover {
-            transform: translateY(-4px);
+
+            .card:hover {
+                transform: translateY(-4px);
+            }
+
+        .card-title, .card-text {
+            color: var(--text-primary);
         }
+
         .btn-primary {
-            background-color: #0f3460;
-            border-color: #0f3460;
+            background-color: var(--accent-green);
+            border-color: var(--accent-green);
         }
-        .btn-primary:hover {
-            background-color: #16213e;
-            border-color: #16213e;
+
+            .btn-primary:hover {
+                background-color: var(--accent-green-hover);
+                border-color: var(--accent-green-hover);
+            }
+
+        .btn-warning {
+            background-color: var(--accent-yellow);
+            border-color: var(--accent-yellow);
+            color: #3b2f2f;
         }
+
+            .btn-warning:hover {
+                background-color: var(--accent-yellow-hover);
+                border-color: var(--accent-yellow-hover);
+            }
+
+        .btn-outline-danger {
+            color: var(--accent-brown);
+            border-color: var(--accent-brown);
+        }
+
+            .btn-outline-danger:hover {
+                background-color: var(--accent-brown);
+                border-color: var(--accent-brown);
+                color: white;
+            }
+
         .hero-section {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            background: var(--hero-bg);
             color: white;
             padding: 100px 0;
         }
+
         footer {
-            background-color: #1a1a2e;
+            background-color: var(--footer-bg);
+        }
+
+        .badge.bg-primary {
+            background-color: var(--badge-primary) !important;
+        }
+
+        .badge.bg-info {
+            background-color: var(--badge-info) !important;
+            color: white !important;
+        }
+
+        .badge.bg-warning {
+            background-color: var(--badge-warning) !important;
+            color: #3b2f2f !important;
+        }
+
+        .form-control, .form-select {
+            background-color: var(--input-bg);
+            color: var(--text-primary);
+            border-color: var(--border-color);
+        }
+
+            .form-control:focus, .form-select:focus {
+                background-color: var(--input-bg);
+                color: var(--text-primary);
+                border-color: var(--accent-green);
+                box-shadow: 0 0 0 0.2rem rgba(90, 114, 71, 0.25);
+            }
+
+        .alert-info {
+            background-color: var(--alert-bg);
+            color: var(--text-primary);
+            border-color: var(--border-color);
+        }
+
+        .text-muted {
+            color: var(--text-secondary) !important;
+        }
+
+        .theme-toggle {
+            cursor: pointer;
+            background: none;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s;
+        }
+
+            .theme-toggle:hover {
+                background: rgba(255,255,255,0.1);
+                border-color: rgba(255,255,255,0.5);
+            }
+
+        .nav-tabs .nav-link {
+            color: var(--text-secondary);
+        }
+
+            .nav-tabs .nav-link.active {
+                background-color: var(--bg-card);
+                color: var(--text-primary);
+                border-color: var(--border-color) var(--border-color) var(--bg-card);
+            }
+
+        .bg-light {
+            background-color: var(--bg-primary) !important;
         }
     </style>
     @RenderSection("Styles", required: false)
@@ -60,7 +215,12 @@
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Workout" asp-action="Index">
-                                <i class="bi bi-list-ul"></i> All Workouts
+                                <i class="bi bi-compass"></i> Browse
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Workout" asp-action="MyWorkouts">
+                                <i class="bi bi-person-lines-fill"></i> My Workouts
                             </a>
                         </li>
                         <li class="nav-item">
@@ -75,7 +235,12 @@
                         </li>
                     </ul>
                 }
-                <partial name="_LoginPartial" />
+                <div class="d-flex align-items-center gap-2">
+                    <button class="theme-toggle" id="themeToggle" title="Toggle dark mode">
+                        <i class="bi bi-moon-fill" id="themeIcon"></i>
+                    </button>
+                    <partial name="_LoginPartial" />
+                </div>
             </div>
         </div>
     </nav>
@@ -94,6 +259,27 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const html = document.documentElement;
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', savedTheme);
+        updateIcon(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const current = html.getAttribute('data-theme');
+            const next = current === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            updateIcon(next);
+        });
+
+        function updateIcon(theme) {
+            themeIcon.className = theme === 'light' ? 'bi bi-moon-fill' : 'bi bi-sun-fill';
+        }
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

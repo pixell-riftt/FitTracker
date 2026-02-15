@@ -178,11 +178,17 @@ namespace FitTracker.Web.Controllers
             return RedirectToAction(nameof(Favorites));
         }
 
-        [HttpGet]
         public async Task<IActionResult> Favorites()
         {
             var favorites = await _workoutService.GetFavoriteWorkoutsAsync(GetUserId());
             return View(favorites);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> MyWorkouts()
+        {
+            var workouts = await _workoutService.GetMyWorkoutsAsync(GetUserId());
+            return View(workouts);
         }
     }
 }

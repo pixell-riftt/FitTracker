@@ -43,7 +43,6 @@ namespace FitTracker.Data
                 .HasForeignKey(uw => uw.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Seed default user
             var defaultUser = new IdentityUser
             {
                 Id = "a1b2c3d4-5678-9012-abcd-ef1234567890",
@@ -58,7 +57,6 @@ namespace FitTracker.Data
             };
             builder.Entity<IdentityUser>().HasData(defaultUser);
 
-            // Seed exercise types
             builder.Entity<ExerciseType>().HasData(
                 new ExerciseType { Id = 1, Name = "Cardio" },
                 new ExerciseType { Id = 2, Name = "Strength" },

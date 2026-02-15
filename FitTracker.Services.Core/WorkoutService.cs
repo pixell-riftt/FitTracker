@@ -291,5 +291,27 @@ namespace FitTracker.Services.Core
                 Author = workout.Author.UserName
             };
         }
+
+        public async Task<IEnumerable<WorkoutIndexViewModel>> GetMyWorkoutsAsync(string userId)
+        {
+            return await _context.Workouts
+                .Where(w => !w.IsDeleted && w.AuthorId == userId)
+                .Include(w => w.ExerciseType)
+                .Include(w => w.UsersWorkouts)
+                .OrderByDescending(w => w.CreatedOn)
+                .Select(w => new WorkoutIndexViewModel
+                {
+                    Id = w.Id,
+                    Title = w.Title,
+                    ImageUrl = w.ImageUrl,
+                    ExerciseType = w.ExerciseType.Name,
+                    DurationMinutes = w.DurationMinutes,
+                    SavedCount = w.UsersWorkouts.Count,
+                    IsAuthor = true,
+                    IsSaved = false
+                })
+                .ToListAsync();
+        }
+
     }
 }
