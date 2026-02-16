@@ -105,6 +105,7 @@ namespace FitTracker.Web.Controllers
             }
 
             await _workoutService.AddWorkoutAsync(model, GetUserId());
+            TempData["Success"] = "Workout created successfully!";
             return RedirectToAction(nameof(Index));
         }
 
@@ -141,6 +142,7 @@ namespace FitTracker.Web.Controllers
                 }
 
                 await _workoutService.EditWorkoutAsync(model, GetUserId());
+                TempData["Success"] = "Workout updated successfully!";
             }
             catch
             {
@@ -171,6 +173,8 @@ namespace FitTracker.Web.Controllers
             try
             {
                 await _workoutService.DeleteWorkoutAsync(id, GetUserId());
+                TempData["Success"] = "Workout deleted successfully!";
+
             }
             catch
             {
@@ -185,6 +189,7 @@ namespace FitTracker.Web.Controllers
         public async Task<IActionResult> Save(int id)
         {
             await _workoutService.SaveWorkoutAsync(id, GetUserId());
+            TempData["Success"] = "Workout saved to favorites!";
             return RedirectToAction(nameof(Index));
         }
 
@@ -193,6 +198,7 @@ namespace FitTracker.Web.Controllers
         public async Task<IActionResult> Remove(int id)
         {
             await _workoutService.RemoveWorkoutAsync(id, GetUserId());
+            TempData["Success"] = "Workout removed from favorites!";
             return RedirectToAction(nameof(Favorites));
         }
 

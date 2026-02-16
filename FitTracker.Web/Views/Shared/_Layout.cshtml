@@ -246,6 +246,20 @@
     </nav>
 
     <main>
+        @if (TempData["Success"] != null)
+        {
+            <div class="position-fixed top-0 end-0 p-3" style="z-index: 9999;">
+                <div class="toast show align-items-center text-white border-0" role="alert"
+                     style="background-color: var(--accent-green);">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            <i class="bi bi-check-circle-fill"></i> @TempData["Success"]
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                    </div>
+                </div>
+            </div>
+        }
         @RenderBody()
     </main>
 
@@ -278,6 +292,15 @@
 
         function updateIcon(theme) {
             themeIcon.className = theme === 'light' ? 'bi bi-moon-fill' : 'bi bi-sun-fill';
+        }
+
+        // 3 sec hide
+        const toast = document.querySelector('.toast');
+        if (toast) {
+            setTimeout(() => {
+                toast.classList.remove('show');
+                toast.classList.add('hide');
+            }, 3000);
         }
     </script>
     @RenderSection("Scripts", required: false)
