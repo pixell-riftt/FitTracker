@@ -45,9 +45,27 @@ namespace FitTracker.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? exerciseTypeId, string? searchTerm)
         {
             var workouts = await _workoutService.GetAllWorkoutsAsync(GetUserId());
+
+            if (exerciseTypeId.HasValue && exerciseTypeId.Value > 0)
+            {
+                workouts = workouts.Where(w => w.ExerciseType ==
+                    _workoutService.GetAllExerciseTypesAsync().Result
+                    .FirstOrDefault(e => e.Id == exerciseTypeId.Value)?.Name)
+                    .ToList();
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                workouts = workouts.Where(w => w.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            ViewBag.ExerciseTypes = await _workoutService.GetAllExerciseTypesAsync();
+            ViewBag.SelectedType = exerciseTypeId;
+            ViewBag.SearchTerm = searchTerm;
+
             return View(workouts);
         }
 

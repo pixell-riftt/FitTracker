@@ -1,19 +1,50 @@
 ﻿@model IEnumerable<WorkoutIndexViewModel>
 
 @{
-    ViewData["Title"] = "All Workouts";
+    ViewData["Title"] = "Browse Workouts";
 }
 
 <div class="container my-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2><i class="bi bi-list-ul"></i> All Workouts</h2>
+        <h2><i class="bi bi-compass"></i> Browse Workouts</h2>
         <a asp-action="Create" class="btn btn-primary">
             <i class="bi bi-plus-circle"></i> Add Workout
         </a>
     </div>
 
+    <div class="card p-3 mb-4">
+        <form method="get" asp-action="Index" class="row g-3 align-items-end">
+            <div class="col-md-5">
+                <label class="form-label"><i class="bi bi-search"></i> Search</label>
+                <input type="text" name="searchTerm" class="form-control" placeholder="Search by title..."
+                       value="@ViewBag.SearchTerm" />
+            </div>
+            <div class="col-md-4">
+                <label class="form-label"><i class="bi bi-tag"></i> Exercise Type</label>
+                <select name="exerciseTypeId" class="form-select">
+                    <option value="">All Types</option>
+                    @if (ViewBag.ExerciseTypes != null)
+                    {
+                        @foreach (var type in (IEnumerable<ExerciseTypeViewModel>)ViewBag.ExerciseTypes)
+                        {
+                            <option value="@type.Id" selected="@(ViewBag.SelectedType != null && (int)ViewBag.SelectedType == type.Id)">
+                                @type.Name
+                            </option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-funnel"></i> Filter
+                </button>
+            </div>
+        </form>
+    </div>
+
     @if (Model.Any())
     {
+        <p class="text-muted mb-3">Showing @Model.Count() workout(s)</p>
         <div class="row">
             @foreach (var workout in Model)
             {
@@ -24,7 +55,7 @@
     else
     {
         <div class="alert alert-info text-center">
-            <i class="bi bi-info-circle"></i> No workouts found. Be the first to add one!
+            <i class="bi bi-info-circle"></i> No workouts found. Try a different search or filter!
         </div>
     }
 </div>
