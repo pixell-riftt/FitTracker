@@ -14,6 +14,30 @@
 
     @if (Model.Any())
     {
+        <div class="row mb-4">
+            <div class="col-md-4 mb-3">
+                <div class="card p-3 text-center">
+                    <i class="bi bi-lightning-charge display-6" style="color: var(--accent-green);"></i>
+                    <h3 class="mt-2 mb-0">@Model.Count()</h3>
+                    <p class="text-muted mb-0">Total Workouts</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card p-3 text-center">
+                    <i class="bi bi-clock display-6" style="color: var(--accent-brown);"></i>
+                    <h3 class="mt-2 mb-0">@Model.Sum(w => w.DurationMinutes)</h3>
+                    <p class="text-muted mb-0">Total Minutes</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card p-3 text-center">
+                    <i class="bi bi-heart-fill display-6" style="color: var(--accent-yellow);"></i>
+                    <h3 class="mt-2 mb-0">@Model.Sum(w => w.SavedCount)</h3>
+                    <p class="text-muted mb-0">Total Saves by Others</p>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             @foreach (var workout in Model)
             {
