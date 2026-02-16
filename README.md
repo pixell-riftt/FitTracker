@@ -6,15 +6,20 @@ A fitness workout logging web application built with ASP.NET Core MVC. FitTracke
 
 - **Workout Management** — Full CRUD (Create, Read, Update, Delete) operations for workouts.
 - **Exercise Categories** — Workouts are organized by exercise type (Cardio, Strength, Flexibility, HIIT, CrossFit, Yoga).
-- **Favorites** — Users can save and remove workouts from their personal favorites list.
+- **My Workouts** — Personal dashboard showing only your workouts with stats (total workouts, total minutes, total saves).
+- **Browse & Search** — Browse all workouts with search by title and filter by exercise type.
+- **Favorites** — Users can save and remove workouts from their personal favorites list. You cannot save your own workouts — only other users' workouts can be added to favorites.
+- **Image Upload** — Upload images from your device or provide an image URL for each workout.
 - **User Authentication** — Register and login functionality powered by ASP.NET Identity.
+- **Dark Mode** — Toggle between light (earth tones) and dark mode using the moon/sun icon in the navbar.
+- **Toast Notifications** — Success messages appear when creating, editing, deleting, or saving workouts.
 - **Responsive Design** — Clean, mobile-friendly UI built with Bootstrap 5.
 
 ## Technologies Used
 
 - ASP.NET Core 8.0 (MVC)
 - Entity Framework Core 8.0
-- Microsoft SQL Server
+- Microsoft SQL Server (LocalDB)
 - ASP.NET Identity
 - Razor Views (with Layout, Partial Views, and Sections)
 - Bootstrap 5
@@ -43,37 +48,42 @@ The solution follows a multi-layered architecture:
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/YOUR-USERNAME/FitTracker.git
+   git clone https://github.com/pixell-riftt/FitTracker.git
    cd FitTracker
    ```
 
 2. **Check the connection string** in `FitTracker.Web/appsettings.json`:
    ```json
    "ConnectionStrings": {
-     "DefaultConnection": "Server=.;Database=FitTracker;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True"
+     "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Database=FitTracker;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True"
    }
    ```
-   Adjust the `Server` value if your SQL Server instance name is different (e.g., `Server=.\\SQLEXPRESS`).
+   Adjust the `Server` value if your SQL Server instance name is different.
 
 3. **Apply database migrations:**
    ```bash
-   cd FitTracker.Web
-   dotnet ef database update --project ../FitTracker.Data
+   dotnet ef database update --startup-project FitTracker.Web --project FitTracker.Data
    ```
 
 4. **Run the application:**
    ```bash
+   cd FitTracker.Web
    dotnet run
    ```
 
-5. **Open your browser** and navigate to `https://localhost:5001` or `http://localhost:5000`.
+5. **Open your browser** and navigate to the URL shown in the terminal (e.g., `http://localhost:5276`).
 
-### Default Test Account
+### Test Accounts
 
-A seeded admin account is available for testing:
+**Admin account (seeded):**
+- Email: admin@fittracker.com
+- Password: Admin123!
 
-- **Email:** admin@fittracker.com
-- **Password:** Admin123!
+**Test user account (register manually to test favorites):**
+- Email: testuser@fittracker.com
+- Password: Test123!
+
+> Note: You cannot save your own workouts to favorites. Log in with a different account to test the favorites feature.
 
 ## License
 
