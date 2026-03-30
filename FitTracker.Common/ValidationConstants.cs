@@ -23,6 +23,15 @@ namespace FitTracker.Common
         public const int ExerciseTypeNameMaxLength = 30;
         public const int ExerciseTypeIdMinValue = 1;
         public const int ExerciseTypeIdMaxValue = 6;
-    }
 
+        // Comment
+        public const int CommentContentMinLength = 2;
+        public const int CommentContentMaxLength = 500;
+
+        // UserProfile
+        public const int DisplayNameMinLength = 2;
+        public const int DisplayNameMaxLength = 50;
+
+        public const int BioMaxLength = 500;
+    }
 }

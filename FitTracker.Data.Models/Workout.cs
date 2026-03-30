@@ -35,5 +35,7 @@ namespace FitTracker.Data.Models
         public bool IsDeleted { get; set; } = false;
 
         public virtual ICollection<UserWorkout> UsersWorkouts { get; set; } = new HashSet<UserWorkout>();
+
+        public virtual ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
     }
 }
