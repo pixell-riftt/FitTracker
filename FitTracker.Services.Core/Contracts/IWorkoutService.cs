@@ -35,5 +35,11 @@ namespace FitTracker.Services.Core.Contracts
         Task<WorkoutDeleteViewModel> GetWorkoutDeleteDetailsAsync(int id, string userId);
 
         Task<IEnumerable<WorkoutIndexViewModel>> GetMyWorkoutsAsync(string userId);
+
+        Task<IEnumerable<CommentViewModel>> GetCommentsForWorkoutAsync(int workoutId);
+
+        Task AddCommentAsync(CommentCreateViewModel model, string userId);
+
+        Task DeleteCommentAsync(int commentId, string userId, bool isAdmin);
     }
 }

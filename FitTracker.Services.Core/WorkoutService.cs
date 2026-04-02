@@ -313,5 +313,55 @@ namespace FitTracker.Services.Core
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<CommentViewModel>> GetCommentsForWorkoutAsync(int workoutId)
+        {
+            return await _context.Comments
+                .Where(c => c.WorkoutId == workoutId)
+                .OrderByDescending(c => c.CreatedOn)
+                .Include(c => c.Author)
+                .Select(c => new CommentViewModel
+                {
+                    Id = c.Id,
+                    Content = c.Content,
+                    AuthorName = c.Author.UserName,
+                    AuthorId = c.AuthorId,
+                    CreatedOn = c.CreatedOn
+                })
+                .ToListAsync();
+        }
+
+        public async Task AddCommentAsync(CommentCreateViewModel model, string userId)
+        {
+            var comment = new Comment
+            {
+                Content = model.Content,
+                WorkoutId = model.WorkoutId,
+                AuthorId = userId,
+                CreatedOn = DateTime.UtcNow
+            };
+
+            _context.Comments.Add(comment);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteCommentAsync(int commentId, string userId, bool isAdmin)
+        {
+            var comment = await _context.Comments
+                .FirstOrDefaultAsync(c => c.Id == commentId);
+
+            if (comment == null)
+            {
+                throw new ArgumentException("Comment not found.");
+            }
+
+            if (comment.AuthorId != userId && !isAdmin)
+            {
+                throw new UnauthorizedAccessException("You are not authorized to delete this comment.");
+            }
+
+            _context.Comments.Remove(comment);
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

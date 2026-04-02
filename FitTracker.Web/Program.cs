@@ -21,6 +21,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 .AddEntityFrameworkStores<FitTrackerDbContext>();
 
 builder.Services.AddScoped<IWorkoutService, WorkoutService>();
+builder.Services.AddScoped<IProfileService, ProfileService>();
+builder.Services.AddScoped<IAdminService, AdminService>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
