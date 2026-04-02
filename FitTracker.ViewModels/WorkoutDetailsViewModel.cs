@@ -22,10 +22,14 @@ namespace FitTracker.ViewModels
 
         public string Author { get; set; } = null!;
 
+        public string AuthorId { get; set; } = null!;
+
         public DateTime CreatedOn { get; set; }
 
         public bool IsAuthor { get; set; }
 
         public bool IsSaved { get; set; }
+
+        public IEnumerable<CommentViewModel> Comments { get; set; } = new List<CommentViewModel>();
     }
 }
