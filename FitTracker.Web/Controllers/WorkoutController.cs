@@ -77,6 +77,7 @@ namespace FitTracker.Web.Controllers
 
             model.IsAuthor = await _workoutService.IsWorkoutAuthorAsync(id, userId);
             model.IsSaved = await _workoutService.IsWorkoutSavedAsync(id, userId);
+            model.Comments = await _workoutService.GetCommentsForWorkoutAsync(id);
 
             return View(model);
         }

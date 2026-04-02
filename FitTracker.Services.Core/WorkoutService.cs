@@ -77,6 +77,7 @@ namespace FitTracker.Services.Core
                 DurationMinutes = workout.DurationMinutes,
                 ExerciseType = workout.ExerciseType.Name,
                 Author = workout.Author.UserName,
+                AuthorId = workout.AuthorId,
                 CreatedOn = workout.CreatedOn,
                 IsAuthor = false,
                 IsSaved = false
