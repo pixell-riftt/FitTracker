@@ -1,0 +1,52 @@
+﻿@model IEnumerable<CommentViewModel>
+
+@{
+    ViewData["Title"] = "Manage Comments";
+}
+
+<h2 class="mb-4"><i class="bi bi-chat-dots"></i> Manage Comments</h2>
+
+<div class="card">
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead>
+                <tr style="background-color: var(--bg-primary);">
+                    <th>ID</th>
+                    <th>Content</th>
+                    <th>Author</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var comment in Model)
+                {
+                    <tr>
+                        <td>@comment.Id</td>
+                        <td>
+                            @if (comment.Content.Length > 50)
+                            {
+                                @comment.Content.Substring(0, 50)
+                        
+                                <text>...</text>
+                            }
+                            else
+                            {
+                                @comment.Content
+                            }
+                        </td>
+                        <td>@comment.AuthorName</td>
+                        <td>@comment.CreatedOn.ToString("MMM dd, yyyy")</td>
+                        <td>
+                            <form asp-action="DeleteComment" asp-route-id="@comment.Id" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                    <i class="bi bi-trash"></i> Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

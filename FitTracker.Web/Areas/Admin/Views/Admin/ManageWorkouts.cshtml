@@ -1,0 +1,47 @@
+﻿@model IEnumerable<WorkoutIndexViewModel>
+
+@{
+    ViewData["Title"] = "Manage Workouts";
+}
+
+<h2 class="mb-4"><i class="bi bi-list-ul"></i> Manage Workouts</h2>
+
+<div class="card">
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead>
+                <tr style="background-color: var(--bg-primary);">
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Type</th>
+                    <th>Duration</th>
+                    <th>Saves</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var workout in Model)
+                {
+                    <tr>
+                        <td>@workout.Id</td>
+                        <td>@workout.Title</td>
+                        <td><span class="badge bg-primary">@workout.ExerciseType</span></td>
+                        <td>@workout.DurationMinutes min</td>
+                        <td><span class="badge bg-warning text-dark">@workout.SavedCount</span></td>
+                        <td>
+                            <a asp-area="" asp-controller="Workout" asp-action="Details" asp-route-id="@workout.Id"
+                               class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-eye"></i> View
+                            </a>
+                            <form asp-action="DeleteWorkout" asp-route-id="@workout.Id" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                    <i class="bi bi-trash"></i> Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
