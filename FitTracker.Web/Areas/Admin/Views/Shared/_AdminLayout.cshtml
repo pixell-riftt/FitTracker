@@ -1,0 +1,214 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - FitTracker Admin</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <style>
+        :root[data-theme="light"] {
+            --bg-primary: #f5f0e8;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #3b2f2f;
+            --text-secondary: #6b5b4f;
+            --accent-green: #5a7247;
+            --accent-green-hover: #4a5f3a;
+            --accent-brown: #8b6f47;
+            --accent-yellow: #c9a84c;
+            --navbar-bg: linear-gradient(135deg, #2d1f1f 0%, #4a3a2a 100%);
+            --footer-bg: #2d1f1f;
+            --card-shadow: 0 2px 12px rgba(59, 47, 47, 0.1);
+            --border-color: #e0d5c5;
+            --input-bg: #ffffff;
+            --sidebar-bg: #3b2f2f;
+        }
+
+        :root[data-theme="dark"] {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --bg-card: #2d2d2d;
+            --text-primary: #e8dfd5;
+            --text-secondary: #b0a898;
+            --accent-green: #7a9a5a;
+            --accent-green-hover: #6b8a4d;
+            --accent-brown: #c9a84c;
+            --accent-yellow: #d4b85c;
+            --navbar-bg: linear-gradient(135deg, #111111 0%, #2a2a2a 100%);
+            --footer-bg: #111111;
+            --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+            --border-color: #444444;
+            --input-bg: #3a3a3a;
+            --sidebar-bg: #111111;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .navbar {
+            background: var(--navbar-bg);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .btn-primary {
+            background-color: var(--accent-green);
+            border-color: var(--accent-green);
+        }
+
+            .btn-primary:hover {
+                background-color: var(--accent-green-hover);
+                border-color: var(--accent-green-hover);
+            }
+
+        footer {
+            background-color: var(--footer-bg);
+        }
+
+        .text-muted {
+            color: var(--text-secondary) !important;
+        }
+
+        .form-control, .form-select {
+            background-color: var(--input-bg);
+            color: var(--text-primary);
+            border-color: var(--border-color);
+        }
+
+        .table {
+            color: var(--text-primary);
+        }
+
+        .admin-sidebar {
+            background-color: var(--sidebar-bg);
+            min-height: calc(100vh - 56px);
+        }
+
+            .admin-sidebar .nav-link {
+                color: rgba(255,255,255,0.7);
+                padding: 12px 20px;
+            }
+
+                .admin-sidebar .nav-link:hover, .admin-sidebar .nav-link.active {
+                    color: white;
+                    background-color: rgba(255,255,255,0.1);
+                }
+
+        .theme-toggle {
+            cursor: pointer;
+            background: none;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+            .theme-toggle:hover {
+                background: rgba(255,255,255,0.1);
+            }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                <i class="bi bi-lightning-charge-fill"></i> FitTracker
+            </a>
+            <span class="badge bg-danger fs-6 ms-2">ADMIN</span>
+            <div class="ms-auto d-flex align-items-center gap-2">
+                <a asp-area="" asp-controller="Workout" asp-action="Index" class="btn btn-outline-light btn-sm">
+                    <i class="bi bi-arrow-left"></i> Back to Site
+                </a>
+                <button class="theme-toggle" id="themeToggle" title="Toggle dark mode">
+                    <i class="bi bi-moon-fill" id="themeIcon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-2 admin-sidebar p-0">
+                <div class="nav flex-column pt-3">
+                    <a class="nav-link" asp-area="Admin" asp-controller="Admin" asp-action="Dashboard">
+                        <i class="bi bi-speedometer2"></i> Dashboard
+                    </a>
+                    <a class="nav-link" asp-area="Admin" asp-controller="Admin" asp-action="ManageUsers">
+                        <i class="bi bi-people"></i> Users
+                    </a>
+                    <a class="nav-link" asp-area="Admin" asp-controller="Admin" asp-action="ManageWorkouts">
+                        <i class="bi bi-list-ul"></i> Workouts
+                    </a>
+                    <a class="nav-link" asp-area="Admin" asp-controller="Admin" asp-action="ManageComments">
+                        <i class="bi bi-chat-dots"></i> Comments
+                    </a>
+                </div>
+            </nav>
+
+            <main class="col-md-10 p-4">
+                @if (TempData["Success"] != null)
+                {
+                    <div class="position-fixed top-0 end-0 p-3" style="z-index: 9999;">
+                        <div class="toast show align-items-center text-white border-0" role="alert"
+                             style="background-color: var(--accent-green);">
+                            <div class="d-flex">
+                                <div class="toast-body">
+                                    <i class="bi bi-check-circle-fill"></i> @TempData["Success"]
+                                </div>
+                                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const html = document.documentElement;
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', savedTheme);
+        updateIcon(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const current = html.getAttribute('data-theme');
+            const next = current === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            updateIcon(next);
+        });
+
+        function updateIcon(theme) {
+            themeIcon.className = theme === 'light' ? 'bi bi-moon-fill' : 'bi bi-sun-fill';
+        }
+
+        const toast = document.querySelector('.toast');
+        if (toast) {
+            setTimeout(() => { toast.classList.remove('show'); toast.classList.add('hide'); }, 3000);
+        }
+    </script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

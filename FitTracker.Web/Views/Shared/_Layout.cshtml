@@ -241,6 +241,12 @@
                     </ul>
                 }
                 <div class="d-flex align-items-center gap-2">
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-area="Admin" asp-controller="Admin" asp-action="Dashboard" class="btn btn-outline-light btn-sm">
+                            <i class="bi bi-shield-lock"></i> Admin
+                        </a>
+                    }
                     <button class="theme-toggle" id="themeToggle" title="Toggle dark mode">
                         <i class="bi bi-moon-fill" id="themeIcon"></i>
                     </button>
