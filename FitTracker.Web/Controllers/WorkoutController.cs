@@ -45,8 +45,10 @@ namespace FitTracker.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(int? exerciseTypeId, string? searchTerm)
+        public async Task<IActionResult> Index(int? exerciseTypeId, string? searchTerm, int page = 1)
         {
+            int pageSize = 6;
+
             var workouts = await _workoutService.GetAllWorkoutsAsync(GetUserId());
 
             if (exerciseTypeId.HasValue && exerciseTypeId.Value > 0)
@@ -62,11 +64,15 @@ namespace FitTracker.Web.Controllers
                 workouts = workouts.Where(w => w.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)).ToList();
             }
 
+            var totalCount = workouts.Count();
+            var pagedWorkouts = workouts.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            var paginatedList = new PaginatedList<WorkoutIndexViewModel>(pagedWorkouts, totalCount, page, pageSize);
+
             ViewBag.ExerciseTypes = await _workoutService.GetAllExerciseTypesAsync();
             ViewBag.SelectedType = exerciseTypeId;
             ViewBag.SearchTerm = searchTerm;
 
-            return View(workouts);
+            return View(paginatedList);
         }
 
         [HttpGet]

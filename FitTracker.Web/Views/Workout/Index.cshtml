@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WorkoutIndexViewModel>
+﻿@model PaginatedList<WorkoutIndexViewModel>
 
 @{
     ViewData["Title"] = "Browse Workouts";
@@ -42,15 +42,55 @@
         </form>
     </div>
 
-    @if (Model.Any())
+    @if (Model.Items.Any())
     {
-        <p class="text-muted mb-3">Showing @Model.Count() workout(s)</p>
+        <p class="text-muted mb-3">Showing @Model.Items.Count of @Model.TotalCount workout(s) — Page @Model.PageIndex of @Model.TotalPages</p>
         <div class="row">
-            @foreach (var workout in Model)
+            @foreach (var workout in Model.Items)
             {
                 <partial name="_WorkoutCardPartial" model="workout" />
             }
         </div>
+
+        <nav class="mt-4">
+            <ul class="pagination justify-content-center">
+                @if (Model.HasPreviousPage)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-action="Index"
+                           asp-route-page="@(Model.PageIndex - 1)"
+                           asp-route-searchTerm="@ViewBag.SearchTerm"
+                           asp-route-exerciseTypeId="@ViewBag.SelectedType">
+                            <i class="bi bi-chevron-left"></i> Previous
+                        </a>
+                    </li>
+                }
+
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    <li class="page-item @(i == Model.PageIndex ? "active" : "")">
+                        <a class="page-link" asp-action="Index"
+                           asp-route-page="@i"
+                           asp-route-searchTerm="@ViewBag.SearchTerm"
+                           asp-route-exerciseTypeId="@ViewBag.SelectedType">
+                            @i
+                        </a>
+                    </li>
+                }
+
+                @if (Model.HasNextPage)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-action="Index"
+                           asp-route-page="@(Model.PageIndex + 1)"
+                           asp-route-searchTerm="@ViewBag.SearchTerm"
+                           asp-route-exerciseTypeId="@ViewBag.SelectedType">
+                            Next <i class="bi bi-chevron-right"></i>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
     }
     else
     {
