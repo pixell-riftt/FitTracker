@@ -26,21 +26,21 @@
         }
 
         :root[data-theme="dark"] {
-            --bg-primary: #1a1a1a;
-            --bg-secondary: #2d2d2d;
-            --bg-card: #2d2d2d;
-            --text-primary: #e8dfd5;
-            --text-secondary: #b0a898;
+            --bg-primary: #2c2218;
+            --bg-secondary: #3a2e22;
+            --bg-card: #3a2e22;
+            --text-primary: #f0e6c8;
+            --text-secondary: #c9b99a;
             --accent-green: #7a9a5a;
             --accent-green-hover: #6b8a4d;
             --accent-brown: #c9a84c;
             --accent-yellow: #d4b85c;
-            --navbar-bg: linear-gradient(135deg, #111111 0%, #2a2a2a 100%);
-            --footer-bg: #111111;
-            --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
-            --border-color: #444444;
-            --input-bg: #3a3a3a;
-            --sidebar-bg: #111111;
+            --navbar-bg: linear-gradient(135deg, #1e1610 0%, #2c2218 100%);
+            --footer-bg: #1e1610;
+            --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+            --border-color: #5a4a38;
+            --input-bg: #4a3a2a;
+            --sidebar-bg: #1e1610;
         }
 
         body {
@@ -89,6 +89,34 @@
         }
 
         .table {
+            color: var(--text-primary);
+            --bs-table-bg: var(--bg-card);
+            --bs-table-border-color: var(--border-color);
+            --bs-table-hover-bg: rgba(122, 154, 90, 0.15);
+        }
+
+        .table thead tr {
+            background-color: rgba(122, 154, 90, 0.2) !important;
+        }
+
+        .table thead th {
+            color: var(--text-primary);
+            background-color: rgba(122, 154, 90, 0.2);
+        }
+
+            .table td {
+                color: var(--text-primary) !important;
+            }
+
+        .card-body, .card-body p, .card-body h2, .card-body h3, .card-body h4, .card-body h5 {
+            color: var(--text-primary);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--text-primary);
+        }
+
+        p {
             color: var(--text-primary);
         }
 
