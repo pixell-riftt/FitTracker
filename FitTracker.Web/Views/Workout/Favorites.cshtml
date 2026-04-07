@@ -31,7 +31,8 @@
                                 <a asp-action="Details" asp-route-id="@workout.Id" class="btn btn-primary btn-sm">
                                     <i class="bi bi-eye"></i> Details
                                 </a>
-                                <form asp-action="Remove" asp-route-id="@workout.Id" method="post">
+                                <form asp-action="Remove" asp-route-id="@workout.Id" method="post" class="d-inline"
+                                      onsubmit="return confirm('Remove \'@workout.Title\' from your favorites?');">
                                     <button type="submit" class="btn btn-outline-danger btn-sm">
                                         <i class="bi bi-heart-break"></i> Remove
                                     </button>
